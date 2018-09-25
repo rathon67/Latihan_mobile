@@ -1,0 +1,22 @@
+1. buatlah query untuk mengetahui semua menu yang pernah di beli user dengan result
+(3x10)spt gambar output soal
+
+SELECT DISTINCT users.name, items.item_name, qty
+FROM users
+JOIN purchases on users.id = purchases.user_id
+JOIN purchase_items on purchases.id = purchase_items.purchase_id
+JOIN items ON items.id = purchase_items.item_id
+GROUP BY purchase_items.item_id, users.name
+ORDER BY users.name, items.id
+
+2. Buatlah query untuk menampilkan berapa kali menu Chicken Kung Pao Small dan Fish Ala Thai Small dibeli pada bulan September 2018
+dengan result items (2x2)spt gambar output soal
+
+SELECT items.item_name, sum(purchase_items.qty) as total_amount_september
+FROM users
+JOIN purchases ON users.id = purchases.user_id
+JOIN purchase_items ON purchases.id = purchase_items.purchase_id
+JOIN items on items.id = purchase_items.item_id
+WHERE (items.item_name = 'Chicken Kung Pao Small' OR items.item_name = 'Fish Ala Thai Small')
+AND YEAR(purchases.delivery_datetime)='2018' AND month(purchases.delivery_datetime) = '09'
+GROUP BY items.item_name
